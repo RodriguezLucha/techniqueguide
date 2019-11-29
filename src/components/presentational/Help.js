@@ -29,7 +29,7 @@ export default class Help extends Component {
               This is a personal website designed by
               <a href="https://www.linkedin.com/in/rudy-rodriguez-11424020/" rel="noopener noreferrer" target="_blank"> Rudy </a> to learn and showcase React with Semantic UI.
               <div>
-                Okta login works but no extra functionality yet. Mobile friendly.
+                Mobile friendly.
               </div>
             </p>
             <p>
