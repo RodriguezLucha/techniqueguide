@@ -2,10 +2,21 @@ import {connect} from 'react-redux';
 import {RepetitionGuide} from '../presentational/RepetitionGuide.js';
 import {incrementStepsRepGuide, pauseRepGuide, resetRepGuide} from '../../ActionCreators.js';
 
+const synth = window.speechSynthesis;
+
+function speakCount(count){
+  if (synth.speaking) {
+    console.error('speechSynthesis.speaking');
+    return;
+  }
+  let utterThis = new SpeechSynthesisUtterance(count);
+  synth.speak(utterThis);
+}
+
 
 export function repetitionGuideReducer(
   state = {
-    steps: ['1', '2', 'Hold', '3', '4'],
+    steps: ['1', '2', 'Hold', '3', 'Count'],
     count: 0,
     step: null,
     isRunning: false
@@ -21,8 +32,19 @@ export function repetitionGuideReducer(
       }
       new_state.isRunning = true;
     }
+
+    if(new_state.step !== null){
+      let step_string = new_state.steps[new_state.step];
+
+      if(new_state.step % 5 === 4){
+        step_string = new_state.count + 1;
+      }
+      speakCount(step_string);
+    }
+
     return new_state;
-  } else if (action.type === 'RESET_REP_GUIDE'){
+  } 
+  else if (action.type === 'RESET_REP_GUIDE'){
     let new_state = {...state};
     new_state.isRunning = false;
     new_state.count = 0;
